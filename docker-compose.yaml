@@ -1,0 +1,20 @@
+services:
+  meshmonitor:
+    image: ghcr.io/yeraze/meshmonitor:latest
+    container_name: meshmonitor
+    ports:
+      - "8080:3001"
+    restart: unless-stopped
+    volumes:
+      - meshmonitor-data:/data
+    environment:
+      - MESHTASTIC_NODE_IP=192.168.1.100  # Change to your node's IP
+      - ALLOWED_ORIGINS=http://localhost:8080  # Required for CORS
+      - SESSION_SECRET=your-secure-random-string        # REQUIRED
+      - TRUST_PROXY=true                                # REQUIRED
+      - COOKIE_SECURE=true                              # REQUIRED
+      - ALLOWED_ORIGINS=https://meshmonitor.example.com # REQUIRED!
+
+volumes:
+  meshmonitor-data:
+    driver: local
