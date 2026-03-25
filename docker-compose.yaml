@@ -8,12 +8,12 @@ services:
     volumes:
       - meshmonitor-data:/data
     environment:
-      - MESHTASTIC_NODE_IP=192.168.1.100  # Change to your node's IP
-      - ALLOWED_ORIGINS=http://localhost:8080  # Required for CORS
-      - SESSION_SECRET=your-secure-random-string        # REQUIRED
-      - TRUST_PROXY=true                                # REQUIRED
-      - COOKIE_SECURE=true                              # REQUIRED
-      - ALLOWED_ORIGINS=https://meshmonitor.example.com # REQUIRED!
+      - MESHTASTIC_NODE_IP=${deTemp_IP}
+      - ALLOWED_ORIGINS=http://localhost:8080
+      - SESSION_SECRET=${SESSION_STRING}
+      - TRUST_PROXY=true 
+      - COOKIE_SECURE=true
+      - ALLOWED_ORIGINS=https://meshmonitor.example.com
 
 volumes:
   meshmonitor-data:
