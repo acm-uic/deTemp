@@ -1,19 +1,37 @@
 services:
+  serial-bridge:
+    image: ghcr.io/yeraze/meshtastic-serial-bridge:latest
+    container_name: meshtastic-serial-bridge
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
+    ports:
+      - "4403:4403"
+    restart: unless-stopped
+    environment:
+      - SERIAL_DEVICE=/dev/ttyACM0
+      - BAUD_RATE=115200
+      - TCP_PORT=4403
+
   meshmonitor:
     image: ghcr.io/yeraze/meshmonitor:latest
     container_name: meshmonitor
     ports:
       - "8080:3001"
+      - "4404:4404"
     restart: unless-stopped
     volumes:
       - meshmonitor-data:/data
+    env_file: .env
     environment:
-      - MESHTASTIC_NODE_IP=${deTemp_IP}
-      - ALLOWED_ORIGINS=http://localhost:8080
-      - SESSION_SECRET=${SESSION_STRING}
-      - TRUST_PROXY=true 
+      - NODE_ENV=production
+      - TZ=America/Chicago
+      - MESHTASTIC_NODE_IP=meshtastic-serial-bridge
+      - TRUST_PROXY=true
       - COOKIE_SECURE=true
-      - ALLOWED_ORIGINS=https://meshmonitor.example.com
+      - ALLOWED_ORIGINS=https://detemp.acmuic.org
+      - ENABLE_VIRTUAL_NODE=true
+    depends_on:
+      - serial-bridge
 
 volumes:
   meshmonitor-data:
