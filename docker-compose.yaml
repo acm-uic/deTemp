@@ -23,12 +23,10 @@ services:
       - meshmonitor-data:/data
     env_file: .env
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - TZ=America/Chicago
       - MESHTASTIC_NODE_IP=meshtastic-serial-bridge
-      - TRUST_PROXY=true
-      - COOKIE_SECURE=true
-      - ALLOWED_ORIGINS=https://detemp.acmuic.org
+      - ALLOWED_ORIGINS=http://localhost:8080
       - ENABLE_VIRTUAL_NODE=true
     depends_on:
       - serial-bridge
